@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./todo.css">
+</head>
+
+<body>
+    <div class="box-wrapper">
+        <div class="text-wrapper">
+            <img src="./图片.png" alt="">
+            <h3 class="text">todolist</h3>
+        </div>
+        <hr>
+        <div class="line">
+            <h3>~Today I need to...~</h3>
+        </div>
+        <div class="title-wrapper">
+            <input type="text" placeholder="Add new todo..." class="title">
+            <button class="add">submit</button>
+        </div>
+        <ul>
+
+        </ul>
+        <div class="btn-wrapper">
+            <span class="item-lift">item-lift</span>
+            <span class="all">0</span>All
+            <span class="active">Active</span>
+            <span class="completed">Completed</span>
+            <span class="clear">Clear-completed</span>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    // 获取元素
+    var title = document.querySelector(".title")
+    var add = document.querySelector(".add")
+    var ul = document.querySelector('ul')
+    var item = document.querySelector('.item-lift')
+    var all = document.querySelector('.all')
+    var completed = document.querySelector('.completed')
+    var clear = document.querySelector('.clear')
+
+    // 输入框自动获取焦点
+    title.focus()
+    // 键盘事件
+    title.onkeyup = function (e) {
+        // 非空判断
+        if (e.keyCode == 13) {
+            // 创建li 写入 添加删除
+            var li = document.createElement("li")
+            li.innerHTML = `
+                <li>
+                    <input type="checkbox" class="xuan">
+                    ${title.value}
+                    <span class="del">X</span>
+                </li>
+                `
+            ul.appendChild(li)
+            title.value = ""
+            all.innerHTML = ul.children.length
+        }
+    }
+    // 删除
+    ul.addEventListener("click", function (e) {
+        // 判断是否是删除按钮执行
+        if (e.target.className == "del") {
+            ul.removeChild(e.target.parentNode.parentNode)
+        }
+    })
+    // 点击事件
+    add.onclick = function (e) {
+        // 创建li 写入 添加删除
+        var li = document.createElement("li")
+        li.innerHTML = `
+                <li>
+                    <input type="checkbox" class="xuan">
+                    <span class="zjn22">
+                        ${title.value}
+                    </span>
+                    <span class="del">X</span>
+                </li>
+                `
+        ul.appendChild(li)
+        
+    }
+    title.value = ""
+    // // 复选框选中的li标签出现删除线
+    // ul.addEventListener("click", function (e) {
+    //     console.log(e.target);
+    //     if (e.target.checked || e.target.nodeName == "INPUT") {
+    //         e.target.parentNode.className = "zjn"
+    //     }
+    //     e.target.parentNode.className = "zjn"
+
+    //     if (e.target.className == "xuan") {
+    //         e.target.parentNode.parentNode.style.textDecoration = "line-through"
+    //         // e.target.Sibling.className="zjn1"
+    //     }
+    // })
+    ul.onclick = function (e) {
+        // console.log(e);
+        // e.target是当前点击的input
+        // console.log(e.target);
+        if (e.target.nodeName == "INPUT" || e.target.checked) {
+            e.target.parentNode.parentNode.style.textDecoration = "line-through"
+            // e.target.parentNode.className="zjn"
+
+        }
+    }
+
+    clear.onclick = function(e) {
+        ul.innerHTML = ""
+    }
+</script>
